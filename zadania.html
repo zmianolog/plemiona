@@ -782,7 +782,7 @@ fm.addEventListener('submit',async e=>{e.preventDefault();if(btn.disabled)return
 /* ---------- wspólne dane ---------- */
 function demoRows(){const N=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa","Piotr","Zosia","Kuba","Magda","Paweł","Iza","Robert","Natalia","Adam","Basia","Michał","Julia","Krzysiek"],W=["REA-P","REA-P","REA-P","REA-Z","REA-Z","REA-N","EKS-Z","EKS-Z","EKS-N","REL-P","REL-Z","REL-Z","REL-Z","REL-N","INT-Z","INT-Z","INT-N","REA-P","REL-Z","EKS-Z"];
  const o=N.map((nk,i)=>({a:W[i],nick:nk,id:'d'+i}));if(ME)o.push({a:ME.k,nick:ME.nick,id:ME.id});rows=o;drawMap();}
-function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();});}).catch(()=>{});}
+function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
 listen();
 let saved=null;try{saved=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){}
 if(saved&&saved.k&&saved.id){render(saved);if(demo!==null)demoRows();}
