@@ -808,7 +808,7 @@ function demoRows(){const N=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa"
  const o=N.map((nk,i)=>({a:W[i],nick:nk,id:'d'+i}));if(ME)o.push({a:ME.k,nick:ME.nick,id:ME.id});rows=o;drawMap();}
 function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
 listen();
-if(Q.has('nowy')){try{localStorage.removeItem(LS);}catch(e){}}
+if(Q.has('nowy')){try{localStorage.removeItem(LS);}catch(e){}Q.delete('nowy');try{history.replaceState(null,'',location.pathname+(Q.toString()?'?'+Q.toString():''));}catch(e){}}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){}
 if(saved&&saved.k&&saved.id){render(saved);if(demo!==null)demoRows();}
 })();
