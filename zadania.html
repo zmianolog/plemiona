@@ -542,8 +542,8 @@ body.tt #phone{display:block}
 .nmap .nk span.more{background:var(--card);color:var(--navy);border:1px solid var(--line)}
 #phone .who{font-size:13px;font-weight:700;color:var(--mute);margin:0 0 6px}
 #tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--bg);padding:8px 0 10px;margin-bottom:6px}
-#tabs button,#frb,#phone #again{font:inherit;font-weight:700;font-size:16px;padding:12px 10px;border:2px solid var(--navy);background:var(--card);color:var(--navy);cursor:pointer;width:100%}
-#tabs button.cur,#frb,#phone #again{background:var(--navy);color:#fff}
+#tabs button,#frb,#phone #again,#phone #fix{font:inherit;font-weight:700;font-size:16px;padding:12px 10px;border:2px solid var(--navy);background:var(--card);color:var(--navy);cursor:pointer;width:100%}
+#tabs button.cur,#frb,#phone #again,#phone #fix{background:var(--navy);color:#fff}
 #frb{margin:6px 0 14px}
 #phone input[type=text]{font:inherit;font-size:17px;padding:12px;border:2px solid var(--line);width:100%;box-sizing:border-box;height:auto;flex:none;margin:0}
 #phone input[type=text]:focus{outline:none;border-color:var(--navy)}
@@ -767,12 +767,15 @@ function render(R){ME=R;const k=R.k,eco=R.eco,dyn=R.dyn,E=ECO[eco];
   '<div class="pbox"><b>Czego zespół najbardziej potrzebuje od innych</b><p>'+a.sb+'</p></div>';}
  if(R.sec||R.tie)t+='<div class="pbox"><b>Pogranicze</b><p>'+(R.tie?'Odpowiedzi o przewidywalności sytuacji rozłożyły się równo, więc przyjęto środowisko zmienne. ':'')+(R.sec?'Część odpowiedzi wskazuje też na archetyp '+ARCH[R.sec].nm.toLowerCase()+' ('+R.sec+'). Zespół może łączyć oba sposoby pracy.':'')+'</p></div>';
  t+='<div class="pbox"><b>Z kim współpraca bywa najtrudniejsza</b><p>'+DIAG[eco]+'</p></div>';
- t+='<p class="lead" style="font-size:14px">Pełny test SYNVARIA porównuje archetyp, którego wymaga praca zespołu, z archetypem, według którego zespół faktycznie pracuje, i opiera się na kilku konkretnych sprawach.</p>';
+ t+='<p class="lead" style="font-size:14px">Pełny test SYNVARIA porównuje archetyp, którego wymaga praca zespołu, z archetypem, według którego zespół faktycznie pracuje, i opiera się na kilku konkretnych sprawach.</p><button id="fix" type="button">Popraw odpowiedzi</button>';
  const f='<div class="mini" id="mini"></div><p class="lead" id="mnote"></p><button id="frb" type="button">Sprawdź tarcie</button><div id="fr"></div>';
  OUT.innerHTML='<div class="who">'+esc(R.nick)+'</div><div id="tabs"><button type="button" data-t="team">Mój zespół</button><button type="button" data-t="firm">Wspólna firma</button></div><div id="pTeam"><h1>Archetyp twojego zespołu</h1>'+t+'</div><div id="pFirm"><h1>Wasza wspólna firma</h1><p class="lead">Wszyscy z sali widzą tę samą mapę. Kliknij „Sprawdź tarcie”, żeby zobaczyć, z kim twój zespół współpracowałby najłatwiej, a z kim najtrudniej.</p>'+f+'</div>';
  $$('#tabs button').forEach(b=>b.onclick=()=>setTab(b.dataset.t));setTab('team');
  $('#frb').onclick=()=>{showFr=true;$('#frb').style.display='none';drawFr();$('#fr').scrollIntoView({behavior:'smooth',block:'start'});};
+ $('#fix').onclick=editForm;
  drawMap();}
+function editForm(){if(!ME)return;OUT.style.display='none';F.style.display='block';
+ $('#nick').value=ME.nick||'';const A=ME.ans||{};Object.keys(A).forEach(k=>{const i=fm.querySelector('input[name="'+k+'"][value="'+A[k]+'"]');if(i)i.checked=true;});chk();window.scrollTo(0,0);}
 /* ---------- formularz ---------- */
 let n=0;
 F.innerHTML='<h1>Skrócony test SYNVARIA: jakie plemię reprezentuje twój zespół?</h1><p class="lead">Pomyśl o tym, jak zwykle pracuje twój zespół, czyli o sprawach, którymi zajmuje się najczęściej. Pomiń wyjątki i sytuacje nadzwyczajne. Dziewięć pytań, około trzech minut. Wynik opisuje pracę zespołu, a nie ludzi.</p><form id="frm">'+
@@ -795,18 +798,19 @@ fm.addEventListener('submit',async e=>{e.preventDefault();if(btn.disabled)return
  else if(!tie){const mn=DORD.find(d=>dc[d]===1);if(mn)sec=eco+'-'+mn;}
  if(sec&&OFF[sec])sec=null;
  const nick=$('#nick').value.trim().slice(0,24);
- const id=sesja+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
- const R={k,eco,dyn,sec,tie,nick,id};
+ const id=(ME&&ME.id)||(sesja+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8));
+ const ans={};['a1','a2','a3','b1','b2','b3','c1','c2','c3'].forEach(q=>ans[q]=fd.get(q));
+ const R={k,eco,dyn,sec,tie,nick,id,ans};showFr=false;
  try{localStorage.setItem(LS,JSON.stringify(R));}catch(e){}
  render(R);
- if(db){try{await authP;await db.collection(KOL).doc(id).set({sesja,a:k,nick,ts:firebase.firestore.FieldValue.serverTimestamp()});}
+ if(db){try{await authP;const u=firebase.auth().currentUser;await db.collection(KOL).doc(id).set({sesja,a:k,nick,uid:u?u.uid:'',ts:firebase.firestore.FieldValue.serverTimestamp()});}
   catch(err){OUT.insertAdjacentHTML('afterbegin','<p class="lead warn">Nie udało się przesłać odpowiedzi do wspólnej mapy. Wynik twojego zespołu jest poprawny.</p>');}}
  if(demo!==null)demoRows();
 });
 /* ---------- wspólne dane ---------- */
 function demoRows(){const N=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa","Piotr","Zosia","Kuba","Magda","Paweł","Iza","Robert","Natalia","Adam","Basia","Michał","Julia","Krzysiek"],W=["REA-P","REA-P","REA-P","REA-Z","REA-Z","REA-N","EKS-Z","EKS-Z","EKS-N","REL-P","REL-Z","REL-Z","REL-Z","REL-N","INT-Z","INT-Z","INT-N","REA-P","REL-Z","EKS-Z"];
  const o=N.map((nk,i)=>({a:W[i],nick:nk,id:'d'+i}));if(ME)o.push({a:ME.k,nick:ME.nick,id:ME.id});rows=o;drawMap();}
-function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
+function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));rows=rows.map(r=>ME&&r.id===ME.id?Object.assign({},r,{a:ME.k,nick:ME.nick}):r);if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
 listen();
 if(Q.has('nowy')){try{localStorage.removeItem(LS);}catch(e){}Q.delete('nowy');try{history.replaceState(null,'',location.pathname+(Q.toString()?'?'+Q.toString():''));}catch(e){}}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){}
