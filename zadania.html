@@ -562,6 +562,23 @@ body.tt #phone{display:block}
 .fp small{display:block;font-size:13px;color:var(--mute);margin-top:4px;line-height:1.4}
 @media (min-width:1000px){#phone{max-width:1180px}#out{display:grid!important;grid-template-columns:1fr 1fr;gap:32px;align-items:start}#out .who,#out .warn{grid-column:1/-1}#tabs{display:none}#pTeam,#pFirm{display:block!important}}
 #fr{scroll-margin-top:80px}
+.fsc{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--mute);margin:4px 0 12px}
+.fsc i{flex:1;height:10px;background:linear-gradient(90deg,#1F4460,#4F7598,#B9CDDD,#E8B62C,#94600C)}
+.fb{background:var(--card);padding:12px 12px 6px;margin:0 0 12px}
+.fbh{display:flex;justify-content:space-between;align-items:center}
+.fbh b{font-size:17px;color:var(--navy)}
+.fbh span{font-weight:800;font-size:14px;background:var(--info);padding:2px 10px;color:var(--navy)}
+.fb>p{font-size:13px!important;line-height:1.4!important;color:var(--mute);margin:4px 0 8px}
+.lv{border-left:10px solid var(--c);padding:6px 0 6px 10px;margin-bottom:6px;background:color-mix(in srgb,var(--c) 10%,var(--card))}
+.lv.empty{opacity:.45}
+.lvh{display:flex;align-items:center;gap:6px}
+.lvh i{display:none}
+.lvh small{font-size:12px;font-weight:700;color:var(--mute)}
+.lvc{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;min-height:4px}
+.lvc .nk,.lvc .me{font:inherit;font-size:14px;font-weight:700;padding:4px 9px;border:0;background:var(--c);color:var(--fc);cursor:pointer;line-height:1.3}
+.lvc .me{background:var(--card);color:var(--navy);border:2px solid var(--navy);cursor:default}
+.lvc .nk.sel{outline:3px solid var(--navy);outline-offset:1px}
+.lvd .fp{border-top:0;padding:8px 8px 4px 0}
 </style>
 </head>
 <body class="tt">
@@ -724,12 +741,20 @@ function drawMap(){const c={};rowsAll().forEach(r=>{c[r.a]=(c[r.a]||0)+1;});let 
  EORD.forEach(e2=>{m+='<div class="rh" style="--c:'+ECO[e2].c+'"><i></i>'+ECO[e2].n+'</div>';DORD.forEach(d=>{const kk=e2+'-'+d;m+='<div class="cl'+(OFF[kk]?' off':'')+(ME&&kk===ME.k?' me':'')+'" style="--c:'+ECO[e2].c+'">'+(c[kk]||'')+'</div>';});});
  const mp=$('#mini');if(mp)mp.innerHTML=m;const n=$('#mnote');if(n)n.textContent='Komórka twojego zespołu jest obrysowana. Liczby pokazują, ile osób z sali ma dany archetyp. Odpowiedzi: '+rowsAll().length+'.';
  if(showFr)drawFr();}
+const LV=[["#1F4460","#fff","ten sam archetyp"],["#34597C","#fff","ten sam ekosystem, inne tempo"],["#4F7598","#fff","ten sam ekosystem, bardzo różne tempo"],["#7FA2C0","#0F2233","sąsiedni ekosystem"],["#B9CDDD","#0F2233","sąsiedni ekosystem, inne tempo"],["#F0D88A","#5C4810","sąsiedni ekosystem, bardzo różne tempo"],["#E8B62C","#5C4810","ekosystem po przekątnej"],["#C98A17","#fff","po przekątnej, inne tempo"],["#94600C","#fff","po przekątnej, bardzo różne tempo"]];
 function drawFr(){const box=$('#fr');if(!box||!ME)return;
  const oth=rowsAll().filter(r=>r.id!==ME.id).map(r=>Object.assign({r},friction(ME.k,r.a))).sort((a,b)=>a.score-b.score||String(a.r.nick||'').localeCompare(String(b.r.nick||''),'pl'));
- if(!oth.length){box.innerHTML='<p class="lead">Nikt inny jeszcze nie odpowiedział. Lista uzupełni się sama, gdy pojawią się kolejne odpowiedzi.</p>';return;}
- let h='';[0,1,2].forEach(g=>{const L=oth.filter(o=>o.ed===g);if(!L.length)return;
-  h+='<div class="fg g'+g+'"><div class="fgh"><b>'+GR[g][0]+'</b><span>'+L.length+'</span></div><p>'+GR[g][1]+'</p>'+L.map(o=>{const e=o.r.a.slice(0,3);return '<div class="fp"><div class="fpn"><b>'+esc(o.r.nick||'bez nicku')+'</b><span class="ch" style="--c:'+ECO[e].c+';--fc:'+ECO[e].fc+'">'+esc(anm(o.r.a))+'</span></div>'+(o.why?'<small>'+o.why+'</small>':'')+'</div>';}).join('')+'</div>';});
- box.innerHTML=h;}
+ let h='<div class="fsc"><span>spokojnie</span><i></i><span>gorąco</span></div>';
+ if(!oth.length)h+='<p class="lead">Nikt inny jeszcze nie odpowiedział. Skala uzupełni się sama, gdy pojawią się kolejne odpowiedzi.</p>';
+ [0,1,2].forEach(g=>{h+='<div class="fb"><div class="fbh"><b>'+GR[g][0]+'</b><span>'+oth.filter(o=>o.ed===g).length+'</span></div><p>'+GR[g][1]+'</p>';
+  for(let l=g*3;l<g*3+3;l++){const L=oth.filter(o=>o.score===l),c=LV[l];
+   h+='<div class="lv'+(L.length||l===0?'':' empty')+'" style="--c:'+c[0]+';--fc:'+c[1]+'"><div class="lvh"><i></i><small>'+c[2]+'</small></div><div class="lvc">'+(l===0?'<span class="me">Ty: '+esc(ME.nick)+'</span>':'')+L.map(o=>'<button type="button" class="nk" data-i="'+oth.indexOf(o)+'">'+esc(o.r.nick||'bez nicku')+'</button>').join('')+'</div><div class="lvd"></div></div>';}
+  h+='</div>';});
+ box.innerHTML=h;
+ $$('.nk',box).forEach(b=>b.onclick=()=>{const o=oth[+b.dataset.i],d=b.closest('.lv').querySelector('.lvd'),on=b.classList.contains('sel');
+  $$('.nk.sel',box).forEach(x=>x.classList.remove('sel'));$$('.lvd',box).forEach(x=>x.innerHTML='');
+  if(on)return;b.classList.add('sel');const e=o.r.a.slice(0,3);
+  d.innerHTML='<div class="fp"><div class="fpn"><b>'+esc(o.r.nick||'bez nicku')+'</b><span class="ch" style="--c:'+ECO[e].c+';--fc:'+ECO[e].fc+'">'+esc(anm(o.r.a))+'</span></div><small>'+(o.why||'Ten sam archetyp: tak samo rozumiecie dobrą pracę i pracujecie w podobnym tempie.')+'</small></div>';});}
 function setTab(t){tab=t;$$('#tabs button').forEach(b=>b.classList.toggle('cur',b.dataset.t===t));$('#pTeam').style.display=t==='team'?'block':'none';$('#pFirm').style.display=t==='firm'?'block':'none';window.scrollTo(0,0);}
 function render(R){ME=R;const k=R.k,eco=R.eco,dyn=R.dyn,E=ECO[eco];
  F.style.display='none';OUT.style.display='block';window.scrollTo(0,0);
