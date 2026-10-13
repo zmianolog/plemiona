@@ -521,6 +521,25 @@ body.tt #phone{display:block}
 .arb .tl:hover b,.arb .tl.drag b{transform:scale(1.25)}
 #arch .ag .cl{min-height:0;padding:10px 14px}
 #arch .ag{gap:8px}
+/* zadanie: sprawdź tarcie */
+.trw{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:40px;flex:1;min-height:0;align-items:stretch;margin-top:10px}
+.tri h2{font-size:34px;line-height:1.2;margin:0 0 18px;max-width:none}
+.tri ol{margin:0 0 18px;padding-left:28px}
+.tri li{font-size:21px;line-height:1.4;margin-bottom:12px}
+.tri .tm{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:var(--navy);margin:0 0 10px}
+.tri .tm svg{width:26px;height:26px}
+.tri .urll{font-size:18px;color:var(--mute)}
+.tri .urll b{color:var(--navy)}
+.nmap{display:grid;grid-template-columns:150px repeat(3,minmax(0,1fr));grid-template-rows:auto repeat(4,minmax(0,1fr));gap:6px}
+.nmap .hd{font-size:15px;font-weight:700;color:var(--mute);text-align:center;line-height:1.2;align-self:end;padding-bottom:4px}
+.nmap .rh{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:var(--navy)}
+.nmap .rh i{width:12px;height:44px;background:var(--c)}
+.nmap .nc{background:color-mix(in srgb,var(--c) 12%,var(--card));border-left:5px solid var(--c);padding:6px 8px;position:relative;overflow:hidden}
+.nmap .nc.off{background:repeating-linear-gradient(45deg,var(--info),var(--info) 8px,var(--card) 8px,var(--card) 16px);border-left-color:var(--line)}
+.nmap .nc .k{font-size:12px;font-weight:700;color:var(--mute)}
+.nmap .nk{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.nmap .nk span{font-size:14px;font-weight:700;padding:2px 7px;background:var(--c);color:var(--fc);line-height:1.3}
+.nmap .nk span.more{background:var(--card);color:var(--navy);border:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -742,15 +761,6 @@ body.tt #phone{display:block}
  <p class="src">Stąd tytuł książki „Dziesięć plemion organizacji”: plemię to zespół, którego sposób pracy utrwaliły mechanizmy plemienne. SYNVARIA, rozdział 6 i Dodatek D.</p>
 </section>
 
-<section class="s" data-steps="3" data-part="3" id="name">
- <h2>Skąd nazwa SYNVARIA</h2>
- <div class="nm">
-  <div class="w" id="nmw"><span class="a">SYN</span><span class="b">VARIA</span></div>
-  <div class="gl"><div style="--c:var(--navy)" data-g="1"><b>SYN</b><p>z&nbsp;greckiego: razem, wspólnie, jak w&nbsp;słowach synteza i&nbsp;synergia</p></div><div style="--c:var(--honey)" data-g="2"><b>VARIA</b><p>z&nbsp;łacińskiego varius: różny, zmienny, różnorodny</p></div></div>
-  <p class="res" id="nmres">Model opisuje <strong>różnorodność zespołów, które muszą ze sobą współdziałać</strong>. Liczba 10 w&nbsp;pełnej nazwie SYNVARIA&nbsp;10 oznacza liczbę archetypów zespołów.</p>
- </div>
-</section>
-
 <section class="s" data-steps="4" data-part="3" id="eco">
  <h2 style="margin-bottom:14px">Dwa pytania o&nbsp;zespół dają cztery ekosystemy</h2>
  <div class="cr">
@@ -789,7 +799,7 @@ body.tt #phone{display:block}
  <div class="two">
   <div>
    <p style="font-size:46px;line-height:1.2;font-weight:700;color:var(--navy)">Jakie plemię reprezentuje twój zespół?</p>
-   <p>Skrócony test SYNVARIA: dziewięć pytań o&nbsp;ostatnią sprawę, którą twój zespół doprowadził do końca. Zajmie to około trzech minut, a&nbsp;odpowiedzi są anonimowe.</p>
+   <p>Skrócony test SYNVARIA: dziewięć pytań o&nbsp;to, jak zwykle pracuje twój zespół. Zajmie to około trzech minut. Zamiast nazwiska możesz podać nick, bo pozostali zobaczą go przy twoim archetypie.</p>
    <p class="lead" style="font-size:22px">Na telefonie zobaczysz archetyp swojego zespołu, a&nbsp;na ekranie wspólny obraz wszystkich zespołów z&nbsp;sali, tak jakby tworzyły jedną firmę.</p>
   </div>
   <div class="rows">
@@ -803,7 +813,7 @@ body.tt #phone{display:block}
 
 <section class="s tk" data-steps="0" data-part="3" data-qr="test">
  <div class="badge"><span class="ico"><i data-lucide="clipboard-check"></i></span><span class="t">Zadanie<small>odpowiedź na telefonie</small></span></div>
- <div class="qrw"><div class="qr"></div><div><p>Zeskanuj kod telefonem i&nbsp;odpowiedz na dziewięć pytań.</p><p class="urll">Bez kodu? Wpisz w&nbsp;przeglądarce telefonu albo laptopa:</p><p class="url"></p><div style="margin-top:30px"><div class="cnt" data-cnt="test">0</div><div class="cntl">odpowiedzi</div></div></div></div>
+ <div class="qrw"><div class="qr"></div><div><p>Zeskanuj kod telefonem, wpisz imię albo nick i&nbsp;odpowiedz na dziewięć pytań. Najwygodniej na laptopie: wynik i&nbsp;wspólna firma są tam obok siebie.</p><p class="urll">Bez kodu? Wpisz w&nbsp;przeglądarce telefonu albo laptopa:</p><p class="url"></p><div style="margin-top:30px"><div class="cnt" data-cnt="test">0</div><div class="cntl">odpowiedzi</div></div></div></div>
  <div class="steps3"><i>1. Instrukcja</i><i class="cur">2. Odpowiedź na telefonie</i><i>3. Wspólna firma</i></div>
 </section>
 
@@ -900,6 +910,23 @@ body.tt #phone{display:block}
 </section>
 
 <!-- ===================== CZĘŚĆ 5 ===================== -->
+<section class="s tk" data-steps="0" data-part="4" id="tarcie">
+ <div class="badge"><span class="ico"><i data-lucide="users"></i></span><span class="t">Zadanie<small>sprawdź tarcie</small></span></div>
+ <div class="trw">
+  <div class="tri">
+   <h2>Z&nbsp;kim z&nbsp;tej sali współpracowałbyś najłatwiej, a&nbsp;z&nbsp;kim najtrudniej?</h2>
+   <ol>
+    <li>Na tej samej stronie, na której robiłeś test, otwórz zakładkę „Wspólna firma”.</li>
+    <li>Kliknij „Sprawdź tarcie”. Pozostali uczestnicy ułożą się od najmniejszego do największego tarcia z&nbsp;twoim zespołem.</li>
+    <li>Sprawdź, kto jest w&nbsp;grupie „Największe tarcie”, i&nbsp;zastanów się, czy tak to wygląda w&nbsp;twojej pracy.</li>
+   </ol>
+   <p class="tm"><i data-lucide="timer"></i>2 minuty</p>
+   <p class="urll">Strona zadań: <b class="url2"></b></p>
+  </div>
+  <div class="nmap" id="nmap"></div>
+ </div>
+</section>
+
 <section class="s op" data-steps="0" data-part="5" data-op="5"><div class="lbl">Część 5<em>Wnioski</em></div><div class="qq">Co z&nbsp;tego wynika dla projektowania organizacji?</div></section>
 
 <section class="s" data-steps="4" data-part="5">
@@ -1087,6 +1114,7 @@ const PARTS=["Trybalizm","Konsekwencje dla dużych organizacji","SYNVARIA","Jak 
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
 
+
 /* ---------- postacie z biblioteki ---------- */
 const NS='http://www.w3.org/2000/svg';
 function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
@@ -1144,64 +1172,8 @@ const Q=new URLSearchParams(location.search);
 const sesja=Q.get('sesja')||new Date().toISOString().slice(0,10);
 const KOL="plemiona_test";
 
-/* ---------- tryb telefonu: skrócony test SYNVARIA ---------- */
-const qs1=location.search.slice(1).split('&')[0];
-if(qs1==='1'||Q.get('test')!==null){
- document.body.classList.add('tt');if(LOGO_UCZELNIA)$('#phone .logoU').src=LOGO_UCZELNIA;
- const F=$('#pform'),OUT=$('#out');
- const QS=[
-  ["A","Nad czym pracuje zespół",[
-   ["a1","Co powstało na końcu tej sprawy?",[["t","Konkretny rezultat","na przykład wyrób, raport, rozliczenie, system albo decyzja"],["f","Uzgodnienie, utrzymany kontakt albo przekazana informacja","między stronami, które zespół łączy"]]],
-   ["a2","Gdyby zespół zniknął z dnia na dzień, co przestałoby się dziać?",[["t","Przestałby powstawać konkretny rezultat",""],["f","Zostałby przerwany przepływ","na przykład kontakt z klientami albo uzgodnienia między działami"]]],
-   ["a3","Po czym zespół pozna, że jego praca ma sens?",[["t","Po tym, że rezultat został wytworzony",""],["f","Po tym, że druga strona chce dalej współpracować","albo że praca przeszła między zespołami bez zakłóceń"]]]]],
-  ["B","Co rozstrzyga o jakości pracy",[
-   ["b1","Kiedy zespół uznał tę sprawę za zakończoną?",[["i","Gdy spełniła ustalony standard","procedurę albo specyfikację"],["e","Gdy zareagował odbiorca","albo gdy sprawdzenie w praktyce dało wynik"]]],
-   ["b2","Kiedy zespół dowiedział się, czy pracę wykonał dobrze?",[["i","Od razu albo w ciągu kilku dni",""],["e","Po tygodniach albo miesiącach",""]]],
-   ["b3","Kto mógł podważyć jakość tej pracy?",[["i","Osoba sprawdzająca zgodność z zasadami w firmie",""],["e","Ktoś, kogo zespół nie kontroluje","na przykład klient, użytkownik, rynek albo regulator"]]]]],
-  ["C","Jak przewidywalne są sytuacje",[
-   ["c1","Czy z podobną sprawą zespół miał już do czynienia?",[["P","Tak, wiele razy","i wiadomo było, co zrobić"],["Z","Tak, ale tę trzeba było dopasować","do okoliczności"],["N","Nie","najpierw trzeba było ustalić, z jakim problemem zespół ma do czynienia"]]],
-   ["c2","Skąd zespół wiedział, jak postąpić?",[["P","Z procedury albo ustalonego sposobu pracy",""],["Z","Z doświadczenia","wybierając jedno z kilku sprawdzonych rozwiązań"],["N","Z własnych prób i ustaleń","bo gotowego rozwiązania nie było"]]],
-   ["c3","Jak często zespół musi rozwiązywać takie sprawy sam, bez przekazywania ich wyżej?",[["P","Rzadko","bo zwykle wystarcza procedura"],["Z","Często, ale w znanych granicach",""],["N","Bardzo często","i to w sprawach, których nikt wcześniej nie rozwiązywał"]]]]]];
- let n=0;
- F.innerHTML='<h1>Skrócony test SYNVARIA: jakie plemię reprezentuje twój zespół?</h1><p class="lead">Pomyśl o ostatniej sprawie, którą twój zespół doprowadził do końca, i odpowiadaj na podstawie tego, co się w niej wydarzyło. Dziewięć pytań, około trzech minut, odpowiedzi są anonimowe. Wynik opisuje pracę zespołu, a nie ludzi.</p><form id="frm">'+
-  QS.map(sec=>'<div class="sec">'+sec[1]+'</div>'+sec[2].map(q=>{n++;return '<fieldset><legend>'+n+'. '+q[1]+'</legend><div class="op3">'+q[2].map(o=>'<label><input type="radio" name="'+q[0]+'" value="'+o[0]+'" required><span><b>'+o[1]+'</b>'+(o[2]?' '+o[2]:'')+'</span></label>').join('')+'</div></fieldset>';}).join('')).join('')+
-  '<button id="send" type="submit" disabled>Pokaż wynik</button></form>';
- const f=$('#frm'),btn=$('#send');
- f.addEventListener('change',()=>{btn.disabled=!f.checkValidity();});
- f.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(f);
-  const cnt=(ks,v)=>ks.filter(k=>fd.get(k)===v).length;
-  const tA=cnt(['a1','a2','a3'],'t'),iB=cnt(['b1','b2','b3'],'i');const dc={P:cnt(['c1','c2','c3'],'P'),Z:cnt(['c1','c2','c3'],'Z'),N:cnt(['c1','c2','c3'],'N')};
-  const obj=tA>=2?'t':'f',cri=iB>=2?'i':'e';
-  let dyn=DORD.find(d=>dc[d]>=2)||'Z';const tie=!DORD.some(d=>dc[d]>=2);
-  const ecoOf=(o,c)=>o==='t'?(c==='i'?'REA':'EKS'):(c==='i'?'INT':'REL');
-  const eco=ecoOf(obj,cri),k=eco+'-'+dyn,E=ECO[eco];
-  let sec=null;
-  if(tA===1||tA===2)sec=ecoOf(obj==='t'?'f':'t',cri)+'-'+dyn;
-  else if(iB===1||iB===2)sec=ecoOf(obj,cri==='i'?'e':'i')+'-'+dyn;
-  else if(!tie){const mn=DORD.find(d=>dc[d]===1);if(mn)sec=eco+'-'+mn;}
-  if(sec&&OFF[sec])sec=null;
-  F.style.display='none';OUT.style.display='block';window.scrollTo(0,0);
-  let h='<h1>Archetyp twojego zespołu</h1>';
-  if(OFF[k])h+='<div class="arch" style="--c:#A9B6C1;--fc:#1E2A33"><span class="cd">'+k+'</span><h3>Komórka wygaszona</h3><div class="eco">Ekosystem: '+E.n.toLowerCase()+' · środowisko: '+DYN[dyn]+'</div></div><div class="pbox"><b>Co to oznacza</b><p>'+OFFP[k]+'</p></div>';
-  else{const a=ARCH[k];h+='<div class="arch" style="--c:'+E.c+';--fc:'+E.fc+'"><span class="cd">'+k+'</span><h3>'+a.nm+'</h3><div class="eco">Ekosystem: '+E.n.toLowerCase()+' · środowisko: '+DYN[dyn]+'</div></div>'+
-   '<p>Przykłady takich zespołów: '+a.ex+'.</p>'+
-   '<div class="pbox"><b>Norma, która utrwala się w takim zespole</b><p>'+a.n+'</p></div>'+
-   '<div class="pbox"><b>Mocne strony</b><p>'+cap(a.sm)+'.</p></div>'+
-   '<div class="pbox"><b>Czego zespół najbardziej potrzebuje od innych</b><p>'+a.sb+'</p></div>';}
-  if(sec||tie)h+='<div class="pbox"><b>Pogranicze</b><p>'+(tie?'Odpowiedzi o przewidywalności sytuacji rozłożyły się równo, więc przyjęto środowisko zmienne. ':'')+(sec?'Część odpowiedzi wskazuje też na archetyp '+ARCH[sec].nm.toLowerCase()+' ('+sec+'). Zespół może łączyć oba sposoby pracy.':'')+'</p></div>';
-  h+='<div class="pbox"><b>Z kim współpraca bywa najtrudniejsza</b><p>'+DIAG[eco]+'</p></div>';
-  h+='<h2>Wasza wspólna firma</h2><div class="mini" id="mini"></div><p class="lead" id="mnote">Komórka twojego zespołu jest obrysowana. Liczby pokazują, ile zespołów z sali ma dany archetyp.</p><p class="lead" style="font-size:14px">Pełny test SYNVARIA porównuje archetyp, którego wymaga praca zespołu, z archetypem, według którego zespół faktycznie pracuje, i opiera się na kilku konkretnych sprawach.</p><button id="again" type="button">Odpowiedz za kolejny zespół</button>';
-  OUT.innerHTML=h;$('#again').onclick=()=>location.reload();
-  const drawMini=rows=>{const c={};rows.forEach(r=>{c[r.a]=(c[r.a]||0)+1;});let m='<div></div>'+DORD.map(d=>'<div class="hd">'+DYN[d]+'</div>').join('');
-   EORD.forEach(e2=>{m+='<div class="rh" style="--c:'+ECO[e2].c+'"><i></i>'+ECO[e2].n+'</div>';DORD.forEach(d=>{const kk=e2+'-'+d;m+='<div class="cl'+(OFF[kk]?' off':'')+(kk===k?' me':'')+'" style="--c:'+ECO[e2].c+'">'+(c[kk]||'')+'</div>';});});
-   $('#mini').innerHTML=m;};
-  drawMini([{a:k}]);
-  if(db){try{await authP;await db.collection(KOL).doc(sesja+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)).set({sesja,a:k,ts:firebase.firestore.FieldValue.serverTimestamp()});
-   db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{drawMini(qs.docs.map(d=>d.data()));$('#mnote').textContent='Komórka twojego zespołu jest obrysowana. Liczby pokazują, ile zespołów z sali ma dany archetyp ('+qs.size+' odpowiedzi).';});
-  }catch(err){OUT.insertAdjacentHTML('beforeend','<p class="lead">Nie udało się przesłać odpowiedzi do zestawienia grupy.</p>');}}
- });
- return;
-}
+/* ---------- stary link do testu prowadzi na stronę zadań ---------- */
+if(location.search.slice(1).split('&')[0]==='1'||Q.get('test')!==null){location.replace(location.pathname.replace(/index\.html$/,'')+'zadania.html'+(Q.get('sesja')?'?sesja='+encodeURIComponent(sesja):''));return;}
 
 /* ---------- prezentacja ---------- */
 const deck=$('#deck');
@@ -1437,21 +1409,32 @@ function onEnter(s){
  if(s.dataset.scn==='s1')runS1();
  if(s.dataset.scn==='s2')runS2();
  if(s.id==='av'){if(!AV.built)buildAV();avState(AV.au.currentTime||0);avPlay();}
- if(s.id==='arch'){arInit();arState(AR.au.currentTime||0);arPlay();}}
+ if(s.id==='arch'){arInit();arState(AR.au.currentTime||0);arPlay();}
+ if(s.id==='tarcie'){listen();nmapOn=true;drawNmap();$$('.url2',s).forEach(e=>e.textContent=shortURL());}}
 function onLeave(s){if(s.id==='cover'||s.id==='closing'){clr('emb');clearInterval(embIv);}clr('diff');if(s.dataset.scn)clr('scn');if(s.id==='av'&&AV.built)avPause();if(s.id==='arch'&&AR.au)arPause();}
 
 /* QR i licznik */
 let rows=[],subd=false;
 const demo=Q.get('demo');
-function taskURL(){return location.origin+location.pathname.replace(/index\.html$/,'')+'?1'+(Q.get('sesja')?'&sesja='+encodeURIComponent(sesja):'');}
-function shortURL(){return (location.host+location.pathname).replace(/index\.html$/,'')+'?1';}
+function taskURL(){return location.origin+location.pathname.replace(/index\.html$/,'')+'zadania.html'+(Q.get('sesja')?'?sesja='+encodeURIComponent(sesja):'');}
+function shortURL(){return (location.host+location.pathname).replace(/index\.html$/,'')+'zadania.html';}
 function drawQR(s){const q=$('.qr',s);if(!q.dataset.done&&window.QRCode){new QRCode(q,{text:taskURL(),width:360,height:360,colorDark:'#1F4460',colorLight:'#ffffff'});q.dataset.done=1;}
  $('.url',s).textContent=shortURL();listen();}
-function setRows(r){rows=r;$$('[data-cnt="test"]').forEach(e=>e.textContent=rows.length);if(mapOn)updRes();}
+function setRows(r){rows=r;$$('[data-cnt="test"]').forEach(e=>e.textContent=rows.length);if(mapOn)updRes();if(nmapOn)drawNmap();}
 function listen(){if(subd)return;subd=true;
  if(demo!==null){const R=rnd(3),W=[["REA-P",16],["REA-Z",14],["REA-N",4],["EKS-Z",5],["EKS-N",2],["REL-P",4],["REL-Z",9],["REL-N",1],["INT-Z",4],["INT-N",1],["INT-P",1]],tot=W.reduce((a,b)=>a+b[1],0),n=+demo||24,o=[];
-  for(let i=0;i<n;i++){let x=R()*tot;for(const w of W){x-=w[1];if(x<=0){o.push({a:w[0]});break;}}}setRows(o);return;}
+  const NK=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa","Piotr","Zosia","Kuba","Magda","Paweł","Iza","Robert","Natalia","Adam","Basia","Michał","Julia","Krzysiek","Gosia","Wojtek","Agata","Łukasz","Hania","Filip","Ela","Szymon","Dorota","Jacek","Monika","Grzegorz","Ilona","Darek","Asia","Rafał"];
+  for(let i=0;i<n;i++){let x=R()*tot;for(const w of W){x-=w[1];if(x<=0){o.push({a:w[0],nick:NK[i%NK.length]+(i>=NK.length?' '+(1+Math.floor(i/NK.length)):'')});break;}}}setRows(o);return;}
  if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>setRows(qs.docs.map(d=>d.data())));}).catch(()=>{});}
+
+/* zadanie: mapa z nickami */
+let nmapOn=false;
+const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function drawNmap(){const m=$('#nmap');if(!m)return;const by={};rows.forEach(r=>{(by[r.a]=by[r.a]||[]).push(r.nick||'bez nicku');});
+ let h='<div></div>'+DORD.map(d=>'<div class="hd">środowisko<br>'+DYN[d]+'</div>').join('');
+ EORD.forEach(e=>{h+='<div class="rh" style="--c:'+ECO[e].c+'"><i></i>'+ECO[e].n+'</div>';DORD.forEach(d=>{const k=e+'-'+d,L=(by[k]||[]).slice().sort((x,y)=>x.localeCompare(y,'pl'));const MX=9;
+  h+='<div class="nc'+(OFF[k]?' off':'')+'" style="--c:'+ECO[e].c+';--fc:'+ECO[e].fc+'"><span class="k">'+k+'</span><div class="nk">'+L.slice(0,MX).map(x=>'<span>'+escH(x)+'</span>').join('')+(L.length>MX?'<span class="more">+'+(L.length-MX)+'</span>':'')+'</div></div>';});});
+ m.innerHTML=h;}
 
 /* wyniki: mapa wspólnej firmy */
 let mapOn=false,pin=null;
