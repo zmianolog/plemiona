@@ -767,12 +767,11 @@ function render(R){ME=R;const k=R.k,eco=R.eco,dyn=R.dyn,E=ECO[eco];
   '<div class="pbox"><b>Czego zespół najbardziej potrzebuje od innych</b><p>'+a.sb+'</p></div>';}
  if(R.sec||R.tie)t+='<div class="pbox"><b>Pogranicze</b><p>'+(R.tie?'Odpowiedzi o przewidywalności sytuacji rozłożyły się równo, więc przyjęto środowisko zmienne. ':'')+(R.sec?'Część odpowiedzi wskazuje też na archetyp '+ARCH[R.sec].nm.toLowerCase()+' ('+R.sec+'). Zespół może łączyć oba sposoby pracy.':'')+'</p></div>';
  t+='<div class="pbox"><b>Z kim współpraca bywa najtrudniejsza</b><p>'+DIAG[eco]+'</p></div>';
- t+='<p class="lead" style="font-size:14px">Pełny test SYNVARIA porównuje archetyp, którego wymaga praca zespołu, z archetypem, według którego zespół faktycznie pracuje, i opiera się na kilku konkretnych sprawach.</p><button id="again" type="button" class="sec2">Odpowiedz jeszcze raz, za inny zespół</button>';
+ t+='<p class="lead" style="font-size:14px">Pełny test SYNVARIA porównuje archetyp, którego wymaga praca zespołu, z archetypem, według którego zespół faktycznie pracuje, i opiera się na kilku konkretnych sprawach.</p>';
  const f='<div class="mini" id="mini"></div><p class="lead" id="mnote"></p><button id="frb" type="button">Sprawdź tarcie</button><div id="fr"></div>';
  OUT.innerHTML='<div class="who">'+esc(R.nick)+'</div><div id="tabs"><button type="button" data-t="team">Mój zespół</button><button type="button" data-t="firm">Wspólna firma</button></div><div id="pTeam"><h1>Archetyp twojego zespołu</h1>'+t+'</div><div id="pFirm"><h1>Wasza wspólna firma</h1><p class="lead">Wszyscy z sali widzą tę samą mapę. Kliknij „Sprawdź tarcie”, żeby zobaczyć, z kim twój zespół współpracowałby najłatwiej, a z kim najtrudniej.</p>'+f+'</div>';
  $$('#tabs button').forEach(b=>b.onclick=()=>setTab(b.dataset.t));setTab('team');
  $('#frb').onclick=()=>{showFr=true;$('#frb').style.display='none';drawFr();$('#fr').scrollIntoView({behavior:'smooth',block:'start'});};
- $('#again').onclick=()=>{try{localStorage.removeItem(LS);}catch(e){}location.reload();};
  drawMap();}
 /* ---------- formularz ---------- */
 let n=0;
@@ -809,6 +808,7 @@ function demoRows(){const N=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa"
  const o=N.map((nk,i)=>({a:W[i],nick:nk,id:'d'+i}));if(ME)o.push({a:ME.k,nick:ME.nick,id:ME.id});rows=o;drawMap();}
 function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
 listen();
+if(Q.has('nowy')){try{localStorage.removeItem(LS);}catch(e){}}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){}
 if(saved&&saved.k&&saved.id){render(saved);if(demo!==null)demoRows();}
 })();
