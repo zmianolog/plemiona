@@ -579,6 +579,11 @@ body.tt #phone{display:block}
 .lvc .me{background:var(--card);color:var(--navy);border:2px solid var(--navy);cursor:default}
 .lvc .nk.sel{outline:3px solid var(--navy);outline-offset:1px}
 .lvd .fp{border-top:0;padding:8px 8px 4px 0}
+#out.hid{display:none!important}
+.adm{margin:40px 0 10px;padding-top:14px;border-top:1px solid var(--line);grid-column:1/-1}
+.adm a{font-size:13px;color:var(--mute)}
+.adm input[type=text]{margin:6px 0 8px!important}
+#phone #admB{font:inherit;font-weight:700;font-size:16px;padding:12px 10px;border:2px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;width:100%}
 </style>
 </head>
 <body class="tt">
@@ -757,7 +762,7 @@ function drawFr(){const box=$('#fr');if(!box||!ME)return;
   d.innerHTML='<div class="fp"><div class="fpn"><b>'+esc(o.r.nick||'bez nicku')+'</b><span class="ch" style="--c:'+ECO[e].c+';--fc:'+ECO[e].fc+'">'+esc(anm(o.r.a))+'</span></div><small>'+(o.why||'Ten sam archetyp: tak samo rozumiecie dobrą pracę i pracujecie w podobnym tempie.')+'</small></div>';});}
 function setTab(t){tab=t;$$('#tabs button').forEach(b=>b.classList.toggle('cur',b.dataset.t===t));$('#pTeam').style.display=t==='team'?'block':'none';$('#pFirm').style.display=t==='firm'?'block':'none';window.scrollTo(0,0);}
 function render(R){ME=R;const k=R.k,eco=R.eco,dyn=R.dyn,E=ECO[eco];
- F.style.display='none';OUT.style.display='block';window.scrollTo(0,0);
+ F.style.display='none';OUT.style.display='block';OUT.classList.remove('hid');window.scrollTo(0,0);
  let t='';
  if(OFF[k])t+='<div class="arch" style="--c:#A9B6C1;--fc:#1E2A33"><span class="cd">'+k+'</span><h3>Komórka wygaszona</h3><div class="eco">Ekosystem: '+E.n.toLowerCase()+' · środowisko: '+DYN[dyn]+'</div></div><div class="pbox"><b>Co to oznacza</b><p>'+OFFP[k]+'</p></div>';
  else{const a=ARCH[k];t+='<div class="arch" style="--c:'+E.c+';--fc:'+E.fc+'"><span class="cd">'+k+'</span><h3>'+a.nm+'</h3><div class="eco">Ekosystem: '+E.n.toLowerCase()+' · środowisko: '+DYN[dyn]+'</div></div>'+
@@ -774,7 +779,7 @@ function render(R){ME=R;const k=R.k,eco=R.eco,dyn=R.dyn,E=ECO[eco];
  $('#frb').onclick=()=>{showFr=true;$('#frb').style.display='none';drawFr();$('#fr').scrollIntoView({behavior:'smooth',block:'start'});};
  $('#fix').onclick=editForm;
  drawMap();}
-function editForm(){if(!ME)return;OUT.style.display='none';F.style.display='block';
+function editForm(){if(!ME)return;OUT.style.display='none';OUT.classList.add('hid');F.style.display='block';
  $('#nick').value=ME.nick||'';const A=ME.ans||{};Object.keys(A).forEach(k=>{const i=fm.querySelector('input[name="'+k+'"][value="'+A[k]+'"]');if(i)i.checked=true;});chk();window.scrollTo(0,0);}
 /* ---------- formularz ---------- */
 let n=0;
@@ -811,6 +816,24 @@ fm.addEventListener('submit',async e=>{e.preventDefault();if(btn.disabled)return
 function demoRows(){const N=["Ania","Bartek","Kasia","Tomek","Ola","Marek","Ewa","Piotr","Zosia","Kuba","Magda","Paweł","Iza","Robert","Natalia","Adam","Basia","Michał","Julia","Krzysiek"],W=["REA-P","REA-P","REA-P","REA-Z","REA-Z","REA-N","EKS-Z","EKS-Z","EKS-N","REL-P","REL-Z","REL-Z","REL-Z","REL-N","INT-Z","INT-Z","INT-N","REA-P","REL-Z","EKS-Z"];
  const o=N.map((nk,i)=>({a:W[i],nick:nk,id:'d'+i}));if(ME)o.push({a:ME.k,nick:ME.nick,id:ME.id});rows=o;drawMap();}
 function listen(){if(!db)return;authP.then(()=>{db.collection(KOL).where('sesja','==',sesja).onSnapshot(qs=>{rows=qs.docs.map(d=>Object.assign({id:d.id},d.data()));rows=rows.map(r=>ME&&r.id===ME.id?Object.assign({},r,{a:ME.k,nick:ME.nick}):r);if(ME&&!rows.some(r=>r.id===ME.id))rows.push({a:ME.k,nick:ME.nick,id:ME.id});drawMap();},err=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie mogę odczytać wspólnej mapy z bazy. Widzisz tylko swój wynik.';(OUT.style.display==='block'?OUT:F).prepend(w);});}).catch(()=>{const w=document.createElement('p');w.className='lead warn';w.textContent='Nie udało się połączyć z bazą. Widzisz tylko swój wynik.';F.prepend(w);});}
+/* ---------- czyszczenie danych przez prowadzącego ---------- */
+const KOD_ADM='PLEMIONA';
+(function(){const ph=$('#phone');const d=document.createElement('div');d.className='adm';
+ d.innerHTML='<a href="#" id="admL">Prowadzący: wyczyść dane</a><div id="admP" style="display:none"><p class="lead" style="font-size:14px">Usuwa wszystkie odpowiedzi z bazy i wynik zapamiętany w tej przeglądarce. Po wpisaniu kodu zaloguj się kontem Google prowadzącego.</p><input type="text" id="admK" autocomplete="off" placeholder="Kod prowadzącego"><button type="button" id="admB">Wyczyść dane</button><p id="admS" class="lead" style="font-size:14px"></p></div>';
+ ph.appendChild(d);
+ $('#admL').onclick=e=>{e.preventDefault();const p=$('#admP');p.style.display=p.style.display==='none'?'block':'none';};
+ const st=t=>{$('#admS').textContent=t;};
+ const local=()=>{try{Object.keys(localStorage).filter(k=>k.indexOf('plemiona_wynik_')===0).forEach(k=>localStorage.removeItem(k));}catch(e){}};
+ $('#admB').onclick=async()=>{if($('#admK').value.trim().toUpperCase()!==KOD_ADM){st('Nieprawidłowy kod.');return;}
+  if(!db){local();st('Wyczyszczono dane w tej przeglądarce.');setTimeout(()=>location.replace(location.pathname),1200);return;}
+  try{st('Logowanie kontem Google…');const pr=new firebase.auth.GoogleAuthProvider();pr.setCustomParameters({login_hint:'marcin.zoltak@zmianologi.ca',prompt:'select_account'});
+   const res=await firebase.auth().signInWithPopup(pr);const em=res.user&&res.user.email;
+   if(em!=='marcin.zoltak@zmianologi.ca'){st('To konto nie ma uprawnień do usuwania danych ('+em+').');await firebase.auth().signOut();return;}
+   st('Usuwam odpowiedzi…');let n=0;
+   for(;;){const qs=await db.collection(KOL).limit(400).get();if(qs.empty)break;const b=db.batch();qs.docs.forEach(x=>b.delete(x.ref));await b.commit();n+=qs.size;}
+   local();await firebase.auth().signOut();st('Usunięto wpisy: '+n+'. Strona za chwilę wczyta się od nowa.');setTimeout(()=>location.replace(location.pathname),1800);
+  }catch(err){st('Nie udało się wyczyścić danych: '+(err&&err.message?err.message:err));}};
+})();
 listen();
 if(Q.has('nowy')){try{localStorage.removeItem(LS);}catch(e){}Q.delete('nowy');try{history.replaceState(null,'',location.pathname+(Q.toString()?'?'+Q.toString():''));}catch(e){}}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){}
